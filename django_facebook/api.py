@@ -313,9 +313,6 @@ class FacebookUserConverter(object):
         '''
         user_data = facebook_profile_data.copy()
         profile = facebook_profile_data.copy()
-        website = profile.get('website')
-        if website:
-            user_data['website_url'] = cls._extract_url(website)
 
         user_data['facebook_profile_url'] = profile.get('link')
         user_data['facebook_name'] = profile.get('name')
@@ -339,9 +336,6 @@ class FacebookUserConverter(object):
         for k, v in facebook_map.items():
             user_data[v] = user_data.get(k)
         user_data['facebook_id'] = int(user_data['facebook_id'])
-
-        if not user_data['about_me'] and user_data.get('quotes'):
-            user_data['about_me'] = user_data.get('quotes')
 
         user_data['date_of_birth'] = cls._parse_data_of_birth(
             user_data['date_of_birth'])
