@@ -311,7 +311,7 @@ def _update_user(user, facebook, overwrite=True):
     # partial support (everything except raw_data and facebook_id is included)
     facebook_data = facebook.facebook_registration_data(username=False)
     facebook_fields = ['facebook_name', 'facebook_profile_url', 'gender',
-                       'date_of_birth', 'about_me', 'website_url', 'first_name', 'last_name']
+                       'date_of_birth', 'first_name', 'last_name']
 
     profile = try_get_profile(user)
     # which attributes to update
