@@ -427,11 +427,11 @@ def get_django_registration_version():
 def parse_scope(scope):
     '''
     Turns
-    'email,user_about_me'
+    'email'
     or
-    ('email','user_about_me')
+    ('email',)
     into a nice consistent
-    ['email','user_about_me']
+    ['email']
     '''
     assert scope, 'scope is required'
     if isinstance(scope, six.string_types):
