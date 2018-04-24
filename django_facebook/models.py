@@ -50,26 +50,15 @@ def validate_settings():
 Its recommended to enable FACEBOOK_CELERY_STORE or disable FACEBOOK_STORE_FRIENDS and FACEBOOK_STORE_LIKES'''
             logging.warn(msg)
 
-    # make sure the context processors are present
-    if hasattr(settings, 'TEMPLATE_CONTEXT_PROCESSORS'):
-        # Backwards-compatible for Django < 1.8
-        required = ['django_facebook.context_processors.facebook',
-                    'django.core.context_processors.request']
-        context_processors = settings.TEMPLATE_CONTEXT_PROCESSORS
+    required = ['django_facebook.context_processors.facebook',
+                'django.template.context_processors.request']
+    for index, template in enumerate(settings.TEMPLATES):
+        context_processors = template['OPTIONS']['context_processors']
         for context_processor in required:
             if context_processor not in context_processors:
                 logging.warn(
-                    'Required context processor %s wasnt found', context_processor)
-    else:
-        required = ['django_facebook.context_processors.facebook',
-                    'django.template.context_processors.request']
-        for index, template in enumerate(settings.TEMPLATES):
-            context_processors = template['OPTIONS']['context_processors']
-            for context_processor in required:
-                if context_processor not in context_processors:
-                    logging.warn(
-                        'Required context processor %s wasnt found in template %d',
-                        context_processor, index)
+                    'Required context processor %s wasnt found in template %d',
+                    context_processor, index)
 
     backends = settings.AUTHENTICATION_BACKENDS
     required = 'django_facebook.auth_backends.FacebookBackend'
